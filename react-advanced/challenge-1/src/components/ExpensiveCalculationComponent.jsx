@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { generatePrimes } from '../lib/utils';
 
 export default function ExpensiveCalculationComponent() {
@@ -25,7 +25,17 @@ export default function ExpensiveCalculationComponent() {
 }
 
 function PrimeComponent() {
-    const primes = generatePrimes(50000);
+
+    const [limit, setLimit] = useState(50000)
+
+    const primes = useMemo(() => { // Esta englobando la funcion que consume 
+      console.log(limit)
+      return generatePrimes(limit);
+    }, [limit])
+
+    const handleClick = (() => {
+      setLimit(limit + 100)
+    })
 
     return (
         <div>
@@ -33,6 +43,7 @@ function PrimeComponent() {
             <p className="max-h-44 overflow-y-scroll">
                 {primes.reverse().join(', ')}
             </p>
+            <button onClick={handleClick}>Aumentar Límite {limit}</button>
         </div>
     );
 }

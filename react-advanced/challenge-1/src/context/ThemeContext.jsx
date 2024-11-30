@@ -1,14 +1,16 @@
 import { createContext, useState } from 'react';
 
-export const ThemeContext = createContext(null);
+// Crear el contexto
+export const ThemeContext = createContext();
 
+// Proveedor del contexto
 export const useTheme = () => {
     const [theme, setTheme] = useState(false);
 
-    const toggleTheme = () => {
+    const toggleTheme = () => { // custom hook
         setTheme((prev) => !prev);
-        document.body.classList.toggle('dark');
+        document.body.classList.toggle('dark'); // clase en index.css
     };
 
-    return { theme, toggleTheme };
+  return {theme, toggleTheme}
 };
